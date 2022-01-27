@@ -1,0 +1,11 @@
+.body{
+    margin:0;
+    padding: 0;
+    box-sizing: border-box;
+}
+.bg-dark{
+    background-color: #75787b;
+}
+.mt-50{
+    margin-top: 50px;
+}
