@@ -1,10 +1,12 @@
 .body{
     margin:0;
     padding: 0;
+    color: #75787b;
     box-sizing: border-box;
 }
 .bg-dark{
     background-color: #75787b;
+    color: aliceblue;
 }
 .mt-50{
     margin-top: 50px;
