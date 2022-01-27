@@ -19,7 +19,7 @@
     <div class="card mt-50 mx-5">
       <h4 class="card-header text-center">Quikr Car Price Predictor</h4>
       <div class="card-body">
-        <form action="POST" accept-charset="utf-8">
+        <form action="" accept-charset="utf-8">
           <div class="form-group text-center my-3">
             <label>Enter Company Name</label>
             <select
@@ -41,18 +41,14 @@
             <select class="form-select" id="model" name="model" required="1">
               <option value="">Select Model</option>
               <!-- display only those models which belongs to the company -->
-              {% for model in models: %}
-              <option value="{{model}}">{{model}}</option>
-              {% endfor %}
             </select>
           </div>
           <div class="form-group text-center my-3">
             <label>Enter Year of Purchace</label>
             <select class="form-select" id="year" name="year" required="1">
-              <option value="">Select Year of Purchace</option>
-              <option value="1">One</option>
-              <option value="2">Two</option>
-              <option value="3">Three</option>
+              {%for year in years%}
+              <option value="{{year}}">{{year}}</option>
+              {%endfor%}
             </select>
           </div>
           <div class="form-group text-center my-3">
@@ -63,10 +59,9 @@
               name="fuel_type"
               required="1"
             >
-              <option value="">Select Fuel Type</option>
-              <option value="1">One</option>
-              <option value="2">Two</option>
-              <option value="3">Three</option>
+              {%for f in fuel_type%}
+              <option value="{{f}}">{{f}}</option>
+              {%endfor%}
             </select>
           </div>
           <div class="form-group text-center my-3">
@@ -74,11 +69,62 @@
             <input class="form-control" type="text" id="kms_driven" />
           </div>
           <div class="text-center">
-            <button class="btn btn-success my-3">Predict Price</button>
+            <button class="btn btn-success my-3" onclick="send_data()">
+              Predict Price
+            </button>
           </div>
         </form>
-      </div>
+        <br>
+        <div class="row text-center">
+           <h2> <span id="prediction"></span></h2>
+        </div>
     </div>
+    <!-- user defined javascript -->
+    <script>
+      function change_model(id, model_id) {
+        var company=document.getElementById(id);
+        var car_model= document.getElementById(model_id);
+        console.log(company.value);
+        car_model.value="";
+        car_model.innerHTML="";
+        {% for company in companies %}
+            if( company.value == "{{ company }}")
+            {
+                {% for model in models %}
+                    {% if company in model %}
+
+                        var newOption= document.createElement("option");
+                        newOption.value="{{ model }}";
+                        newOption.innerHTML="{{ model }}";
+                        car_model.options.add(newOption);
+                    {% endif %}
+                {% endfor %}
+            }
+        {% endfor %}
+      }
+
+      function form_handler(e){
+        e.preventDefault();
+
+      }
+      function send_data(){
+        document.querySelector('form').addEventListener('submit',form_handler);
+        var fd = new FormData(document.querySelector('form'));
+        var xhr = new XMLHttpRequest();
+        xhr.open('post','/predict',true);
+        document.getElementById('prediction').innerHTML = 'wait MF'
+
+        xhr.onreadyStateChange = function()
+        {
+          if(xhr.readyState == XMLHttpRequest.DONE)
+          {
+            document.getElementById('prediction').innerHTML = "Prediction is Rs"+xhr.responseText
+          }
+        }
+        
+        xhr.send(fd);
+      }
+    </script>
     <!-- Option 2: Separate Popper and Bootstrap JS -->
 
     <script
@@ -93,3 +139,5 @@
     ></script>
   </body>
 </html>
+
+<!--  -->
