@@ -19,7 +19,7 @@
     <div class="card mt-50 mx-5">
       <h4 class="card-header text-center">Quikr Car Price Predictor</h4>
       <div class="card-body">
-        <form action="" accept-charset="utf-8">
+        <form method="post" accept-charset="utf-8">
           <div class="form-group text-center my-3">
             <label>Enter Company Name</label>
             <select
@@ -66,7 +66,7 @@
           </div>
           <div class="form-group text-center my-3">
             <label>Enter Kilometers Driven</label>
-            <input class="form-control" type="text" id="kms_driven" />
+            <input class="form-control" type="text" id="kms_driven" required name="kms_driven"/>
           </div>
           <div class="text-center">
             <button class="btn btn-success my-3" onclick="send_data()">
@@ -114,14 +114,14 @@
         xhr.open('post','/predict',true);
         document.getElementById('prediction').innerHTML = 'wait MF'
 
-        xhr.onreadyStateChange = function()
+        xhr.onreadystatechange = function()
         {
           if(xhr.readyState == XMLHttpRequest.DONE)
           {
             document.getElementById('prediction').innerHTML = "Prediction is Rs"+xhr.responseText
           }
         }
-        
+        xhr.onload = function(){}
         xhr.send(fd);
       }
     </script>
