@@ -26,7 +26,7 @@
               class="form-select"
               id="company"
               name="company"
-              required="1"
+              required
               onchange="change_model(this.id,'model')"
             >
               <!-- using python jinja2 -->
@@ -38,14 +38,14 @@
           </div>
           <div class="form-group text-center my-3">
             <label>Enter Model Name</label>
-            <select class="form-select" id="model" name="model" required="1">
+            <select class="form-select" id="model" name="model" required>
               <option value="">Select Model</option>
               <!-- display only those models which belongs to the company -->
             </select>
           </div>
           <div class="form-group text-center my-3">
             <label>Enter Year of Purchace</label>
-            <select class="form-select" id="year" name="year" required="1">
+            <select class="form-select" id="year" name="year" required>
               {%for year in years%}
               <option value="{{year}}">{{year}}</option>
               {%endfor%}
@@ -112,13 +112,13 @@
         var fd = new FormData(document.querySelector('form'));
         var xhr = new XMLHttpRequest();
         xhr.open('post','/predict',true);
-        document.getElementById('prediction').innerHTML = 'wait MF'
+        document.getElementById('prediction').innerHTML = 'wait MF...'
 
         xhr.onreadystatechange = function()
         {
           if(xhr.readyState == XMLHttpRequest.DONE)
           {
-            document.getElementById('prediction').innerHTML = "Prediction is Rs"+xhr.responseText
+            document.getElementById('prediction').innerHTML = "Predicted Price is Rs: "+xhr.responseText
           }
         }
         xhr.onload = function(){}
